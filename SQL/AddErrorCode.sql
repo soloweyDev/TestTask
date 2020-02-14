@@ -1,9 +1,9 @@
-USE TestTask;
+USE TestTask
 GO
 CREATE PROCEDURE AddErrorCodes 
 	@Code INT, 
-	@Text NVARCHAR(255),
-	@outTest NVARCHAR(255) OUTPUT
+	@Text TEXT,
+	@outTest TEXT OUTPUT
 AS
 BEGIN
 	IF EXISTS (SELECT * from ErrorCodes WHERE Code = @Code)
