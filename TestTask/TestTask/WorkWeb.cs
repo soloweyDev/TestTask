@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
+using System.Xml;
 
 namespace TestTask
 {
@@ -21,16 +21,28 @@ namespace TestTask
         {
             var list = new Categories();
 
-            HttpResponseMessage response = await _client.GetAsync($"{UrlApi}JK7WiMax");
+            HttpResponseMessage response = await _client.GetAsync($"{UrlApi}0RpLbQ19");
 
             if (!CheckResponse(response, "Categories")) return list;
 
             string str = await response.Content.ReadAsStringAsync();
 
-            using (TextReader textReader = new StringReader(str))
+            var doc = new XmlDocument();
+            doc.LoadXml(str);
+
+            XmlNodeList xmlNodeList = doc.FirstChild.ChildNodes;
+
+            foreach (var node in xmlNodeList)
             {
-                var xml = new XmlSerializer(typeof(Categories));
-                list = xml.Deserialize(textReader) as Categories;
+                var temp = node as XmlElement;
+                if (temp != null)
+                    list.ListCategories.Add(new Categories.Category
+                                            {
+                                                Id = temp.GetAttribute("id"),
+                                                Name = temp.GetAttribute("name"),
+                                                Parent = temp.GetAttribute("parent"),
+                                                Image = temp.GetAttribute("image")
+                                            });
             }
 
             return list;
@@ -46,10 +58,20 @@ namespace TestTask
 
             string str = await response.Content.ReadAsStringAsync();
 
-            using (TextReader textReader = new StringReader(str))
+            var doc = new XmlDocument();
+            doc.LoadXml(str);
+
+            XmlNodeList xmlNodeList = doc.FirstChild.ChildNodes;
+
+            foreach (var node in xmlNodeList)
             {
-                var xml = new XmlSerializer(typeof(ErrorCodes));
-                list = xml.Deserialize(textReader) as ErrorCodes;
+                var temp = node as XmlElement;
+                if (temp != null)
+                    list.ListErrorCodes.Add(new ErrorCodes.ErrorCode
+                                            {
+                                                Code = temp.GetAttribute("code"),
+                                                Text = temp.GetAttribute("text")
+                                            });
             }
 
             return list;

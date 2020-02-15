@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 
 namespace TestTask
 {
-    [Serializable]
-    [XmlRoot]
     public class ErrorCodes
     {
-        [XmlArray]
-        public IEnumerable<ErrorCode> errorCodes;
+        public List<ErrorCode> ListErrorCodes = new List<ErrorCode>();
 
-        [Serializable]
         public class ErrorCode
         {
-            [XmlAttribute]
-            public string code;
-            [XmlAttribute]
-            public string text;
+            public string Code { get; set; }
+            public string Text { get; set; }
         }
     }
 }

@@ -40,7 +40,7 @@ namespace TestTask
                 var parameter = new SqlParameter
                 {
                     ParameterName = "@Id",
-                    Value = category.id,
+                    Value = category.Id,
                     SqlDbType = SqlDbType.Int
                 };
                 command.Parameters.Add(parameter);
@@ -48,7 +48,7 @@ namespace TestTask
                 parameter = new SqlParameter
                 {
                     ParameterName = "@Name",
-                    Value = category.name,
+                    Value = category.Name,
                     SqlDbType = SqlDbType.NVarChar,
                     Size = 255
                 };
@@ -57,7 +57,7 @@ namespace TestTask
                 parameter = new SqlParameter
                 {
                     ParameterName = "@Parent",
-                    Value = category.parent,
+                    Value = category.Parent,
                     SqlDbType = SqlDbType.Int
                 };
                 command.Parameters.Add(parameter);
@@ -65,7 +65,7 @@ namespace TestTask
                 parameter = new SqlParameter
                 {
                     ParameterName = "@Image",
-                    Value = category.image,
+                    Value = category.Image,
                     SqlDbType = SqlDbType.NVarChar,
                     Size = 255
                 };
@@ -87,7 +87,7 @@ namespace TestTask
                 var parameter = new SqlParameter
                 {
                     ParameterName = "@Code",
-                    Value = errorCode.code,
+                    Value = errorCode.Code,
                     SqlDbType = SqlDbType.Int
                 };
                 command.Parameters.Add(parameter);
@@ -95,7 +95,7 @@ namespace TestTask
                 parameter = new SqlParameter
                 {
                     ParameterName = "@TextIn",
-                    Value = errorCode.text,
+                    Value = errorCode.Text,
                     SqlDbType = SqlDbType.NVarChar,
                     Size = 255
                 };

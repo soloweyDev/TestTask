@@ -1,27 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Xml.Serialization;
+﻿using System.Collections.Generic;
 
 namespace TestTask
 {
-    [Serializable]
-    [XmlRoot]
     public class Categories
     {
-        [XmlArray]
-        public IEnumerable<Category> categories;
+        public List<Category> ListCategories = new List<Category>();
 
-        [Serializable]
         public class Category
         {
-            [XmlAttribute]
-            public string id;
-            [XmlAttribute]
-            public string name;
-            [XmlAttribute]
-            public string parent;
-            [XmlAttribute]
-            public string image;
+            public string Id { get; set; }
+            public string Name { get; set; }
+            public string Parent { get; set; }
+            public string Image { get; set; }
         }
     }
 }
