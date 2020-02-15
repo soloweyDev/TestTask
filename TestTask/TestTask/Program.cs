@@ -14,13 +14,13 @@ namespace TestTask
         static async Task Main(string[] args)
         {
             
-            //await Test1();
-            //await Test2();
+            await Test1();
+            await Test2();
             if (ReadArgs(args))
             {
                 Test3();
-                Test4();
             }
+            await Test4();
         }
 
         private static bool ReadArgs(string[] args)
@@ -141,9 +141,26 @@ namespace TestTask
 
         Вывести пользователю отсортированные по имени категории сгруппированные по родительской категории.
         */
-        private static void Test4()
+        private static async Task Test4()
         {
-            throw new System.NotImplementedException();
+            var workWeb = new WorkWeb();
+            var list = await workWeb.GetCategoriesAsync();
+
+            var groups = list.ListCategories.GroupBy(x => x.Parent);
+
+            foreach (var group in groups)
+            {
+                if (group.Key != 0)
+                {
+                    var temp = list.ListCategories.First(x => x.Id == group.Key);
+                    Console.WriteLine($"{temp.Name}:");
+                    foreach (var category in group)
+                    {
+                        if (category.Name != temp.Name)
+                            Console.WriteLine($"    {category.Name}");
+                    }
+                }
+            }
         }
     }
 }

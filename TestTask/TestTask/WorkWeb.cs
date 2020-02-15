@@ -38,9 +38,9 @@ namespace TestTask
                 if (temp != null)
                     list.ListCategories.Add(new Categories.Category
                                             {
-                                                Id = temp.GetAttribute("id"),
+                                                Id = int.Parse(temp.GetAttribute("id")),
                                                 Name = temp.GetAttribute("name"),
-                                                Parent = temp.GetAttribute("parent"),
+                                                Parent = int.Parse(temp.GetAttribute("parent")),
                                                 Image = temp.GetAttribute("image")
                                             });
             }
