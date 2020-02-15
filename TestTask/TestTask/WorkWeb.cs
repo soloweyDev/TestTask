@@ -25,7 +25,7 @@ namespace TestTask
 
             if (!CheckResponse(response, "Categories")) return list;
 
-            String str = await response.Content.ReadAsStringAsync();
+            string str = await response.Content.ReadAsStringAsync();
 
             using (TextReader textReader = new StringReader(str))
             {
@@ -36,20 +36,20 @@ namespace TestTask
             return list;
         }
 
-        public async Task<Categories> GetErrorCodesAsync()
+        public async Task<ErrorCodes> GetErrorCodesAsync()
         {
-            var list = new Categories();
+            var list = new ErrorCodes();
 
             HttpResponseMessage response = await _client.GetAsync($"{UrlApi}JK7WiMax");
 
             if (!CheckResponse(response, "Categories")) return list;
 
-            String str = await response.Content.ReadAsStringAsync();
+            string str = await response.Content.ReadAsStringAsync();
 
             using (TextReader textReader = new StringReader(str))
             {
-                var xml = new XmlSerializer(typeof(Categories));
-                list = xml.Deserialize(textReader) as Categories;
+                var xml = new XmlSerializer(typeof(ErrorCodes));
+                list = xml.Deserialize(textReader) as ErrorCodes;
             }
 
             return list;
