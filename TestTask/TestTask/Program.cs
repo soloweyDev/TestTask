@@ -1,15 +1,39 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace TestTask
 {
     class Program
     {
-        static async Task Main()
+        static string _file;
+
+        static async Task Main(string[] args)
         {
-            await Test1();
-            await Test2();
-            Test3();
-            Test4();
+            
+            //await Test1();
+            //await Test2();
+            if (ReadArgs(args))
+            {
+                Test3();
+                Test4();
+            }
+        }
+
+        private static bool ReadArgs(string[] args)
+        {
+            if (args.Length == 0)
+            {
+                string test = "Для запуска 3 и 4 теста нужно указать абсолютный путь к файлу Users.json.\n\rПример: TestTask d:\\Projects\\CSharp\\TestTask\\Users.json";
+                Console.WriteLine(test);
+                return false;
+            }
+
+            _file = args[0];
+            return true;
         }
 
         /*
@@ -87,7 +111,29 @@ namespace TestTask
         */
         private static void Test3()
         {
-            throw new System.NotImplementedException();
+            using (var sr = new StreamReader(_file))
+            {
+                var text = sr.ReadToEnd();
+                var json = JsonConvert.DeserializeObject<List<Person>>(text);
+
+                DateTime minTimeCreateAccaunt = json.Min(x => x.CreatedAt);
+                DateTime maxTimeCreateAccaunt = json.Max(x => x.CreatedAt);
+
+                using (var sw = new StreamWriter("UserConverted.txt"))
+                {
+                    foreach (Person person in json)
+                    {
+                        sw.WriteLine($"{person.Id};{person.CreatedAt};{person.Country};{person.FullName};{person.Email}");
+                    }
+
+                    sw.WriteLine($"{json.Count}|{DateTimeToString(minTimeCreateAccaunt)}@{DateTimeToString(maxTimeCreateAccaunt)}");
+                }
+            }
+        }
+
+        private static string DateTimeToString(DateTime dateTime)
+        {
+            return $"{dateTime.Day}.{dateTime.Month}.{dateTime.Year} {dateTime.Hour}:{dateTime.Minute}:{dateTime.Second}";
         }
 
         /*
