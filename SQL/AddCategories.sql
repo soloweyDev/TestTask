@@ -1,11 +1,11 @@
-USE TestTask
+USE TestTask;
 GO
 CREATE PROCEDURE AddCategories 
 	@Id INT, 
-	@Name TEXT,
+	@Name NVARCHAR(255),
 	@Parent INT,
-	@Image TEXT,
-	@outTest TEXT OUTPUT
+	@Image NVARCHAR(255),
+	@outTest NVARCHAR(20) OUTPUT
 AS
 BEGIN
 	IF EXISTS (SELECT * from Categories WHERE Id = @Id)
@@ -15,6 +15,6 @@ BEGIN
 		INSERT INTO Categories(Id, Name, Parent, Image)
 		VALUES(@Id, @Name, @Parent, @Image)
 		SET @outTest = 'Added'
-	END
-END
+	END;
+END;
 GO
