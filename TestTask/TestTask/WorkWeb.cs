@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace TestTask
 
             HttpResponseMessage response = await _client.GetAsync($"{UrlApi}JK7WiMax");
 
-            if (!CheckResponse(response, "Categories")) return list;
+            if (!CheckResponse(response, "ErrorCodes")) return list;
 
             string str = await response.Content.ReadAsStringAsync();
 
@@ -77,11 +76,11 @@ namespace TestTask
             return list;
         }
 
-        private static bool CheckResponse(HttpResponseMessage response, string exchangeName)
+        private bool CheckResponse(HttpResponseMessage response, string name)
         {
             if (response != null && response.StatusCode == HttpStatusCode.OK) return true;
 
-            Console.WriteLine($"Сервер биржи {exchangeName} возвращает ошибку: {response?.StatusCode ?? HttpStatusCode.BadRequest}");
+            Console.WriteLine($"Страница {name} возвращает ошибку: {response?.StatusCode ?? HttpStatusCode.BadRequest}");
             return false;
         }
     }
